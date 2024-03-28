@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Configure AWS Profile
-      run: serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile serverlessUser
+      run: npx serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
