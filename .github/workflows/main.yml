@@ -27,6 +27,6 @@ jobs:
         aws-region: us-east-1
         role-session-name: serverlessUser
     - name: serverless deploy
-        uses: serverless/github-action@master
-        with:
-          args: deploy
+      uses: serverless/github-action@master
+      with:
+        args: deploy
