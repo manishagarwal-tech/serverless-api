@@ -1,0 +1,1 @@
+Welcome to serverless framework working with AWS lambda.

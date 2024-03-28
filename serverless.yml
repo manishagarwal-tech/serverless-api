@@ -1,0 +1,85 @@
+service: serverless-project
+
+frameworkVersion: "3"
+provider:
+    name: aws
+    runtime: nodejs18.x
+    profile: serverlessUser
+    region: us-east-1
+    environment:
+        tableName: ${self:custom.tableName}
+        bucketName: ${self:custom.bucketName}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - dynamodb:*
+              - s3:*
+          Resource: '*'
+
+plugins:
+  - serverless-s3-sync
+  - serverless-webpack
+
+custom:
+  tableName: projectsTable
+  bucketName: serverlessproject-270324
+  s3Sync:
+    - bucketName: ${self:custom.bucketName}
+      localDir: uploads
+
+package:
+  individually: true
+
+functions:
+  getUser:
+    handler: lamdas/api/getUser.handler
+    events:
+      - httpApi:
+          path: /getUsers/{ID}
+          method: GET
+          cors: true
+  getProjectInfo:
+    handler: lamdas/api/getProjectInfo.handler
+    events:
+      - httpApi:
+          path: /getProjects/{ID}
+          method: GET
+          cors: true
+  createProject:
+    handler: lamdas/api/createProject.handler
+    events:
+      - httpApi:
+          path: /createProjects/{ID}
+          method: POST
+          cors: true
+  createFile:
+    handler: lamdas/api/createFile.handler
+    events:
+      - httpApi:
+          path: /createFile/{fileName}
+          method: POST
+          cors: true
+  getFile:
+    handler: lamdas/api/getFile.handler
+    events:
+      - httpApi:
+          path: /getFile/{fileName}
+          method: GET
+          cors: true
+resources:
+  Resources:
+    DemoBucketUpload:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+    MyDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
