@@ -2,22 +2,19 @@ service: serverless-project
 
 frameworkVersion: "3"
 provider:
-    name: aws
-    runtime: nodejs18.x
-    # profile: serverlessUser
-    region: us-east-1
-    environment:
-        tableName: ${self:custom.tableName}
-        bucketName: ${self:custom.bucketName}
-    iamRoleStatements:
-        - Effect: Allow
-          Action:
-              - dynamodb:*
-              - s3:*
-          Resource: '*'
-    apiKeys:
-        - MyFirstAPIKey
-
+  name: aws
+  runtime: nodejs18.x
+  profile: serverlessUser
+  region: us-east-1
+  environment:
+    tableName: ${self:custom.tableName}
+    bucketName: ${self:custom.bucketName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - s3:*
+      Resource: "*"
 plugins:
   - serverless-s3-sync
   - serverless-webpack
@@ -28,6 +25,26 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.bucketName}
       localDir: uploads
+  apiKeys:
+    - free:
+        - myFreeAPIKey
+    - paid:
+        - myPaidAPIKey
+  usagePlan:
+    - free:
+        quota:
+          limit: 1000
+          period: MONTH
+        throttle:
+          rateLimit: 5
+          burstLimit: 20
+    - paid:
+        quota:
+          limit: 10000
+          period: MONTH
+        throttle:
+          rateLimit: 50
+          burstLimit: 200
 
 package:
   individually: true
