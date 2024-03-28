@@ -26,5 +26,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
         role-session-name: serverlessUser
-    - name: Deployment of Lambda function
-      run: serverless deploy
+    - name: serverless deploy
+        uses: serverless/github-action@master
+        with:
+          args: deploy
