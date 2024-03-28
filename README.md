@@ -13,7 +13,7 @@ This repository contains a GitHub Actions workflow (main.yml) for deploying a Se
   * **Configure AWS Profile:** Configures the AWS CLI with the provided AWS access key ID and secret access key, and sets the default AWS region.
   * **Deploy Serverless Service:** Deploys the Serverless application using Serverless Framework. The deployment is performed using the 'serverlessUser' AWS profile.
 
-##Usage
+## Usage
 To use this workflow in your own project:
   1. Ensure that you have a Serverless application set up with a serverless.yml configuration file.
   2. Set up your AWS credentials and AWS profile named 'serverlessUser' locally or as secrets in your GitHub repository settings.
