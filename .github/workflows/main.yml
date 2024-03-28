@@ -25,5 +25,8 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+        role-session-name: serverlessUser
     - name: serverless deploy
-      run: serverless deploy --aws-profile serverlessUser
+      uses: serverless/github-action@master
+      with:
+        args: deploy --aws-profile serverlessUser
