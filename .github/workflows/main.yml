@@ -27,7 +27,4 @@ jobs:
         aws-region: us-east-1
         role-session-name: serverlessUser
     - name: Deployment of Lambda function
-      uses: serverless/github-action@master
       run: serverless deploy
-      with:
-        args: deploy
